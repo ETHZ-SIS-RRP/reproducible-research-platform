@@ -1,0 +1,34 @@
+.dialog {
+  position: absolute;
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+}
+
+.dialog-container {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.dialog-content {
+  flex-direction: column;
+  margin: auto;
+  background-color: white;
+
+  border-radius: 19px;
+  box-shadow: 2px 1px 25px 0px rgb(8, 64, 126);
+}
+
+.dialog-header {
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  font-size: 24px;
+  line-height: 30px;
+  background-color: rgb(33, 92, 175);
+  padding: 30px;
+  color: white;
+  justify-content: center;
+}

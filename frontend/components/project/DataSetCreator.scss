@@ -1,0 +1,65 @@
+@use '../Dropdown' as dropdown;
+@use '../../styles/common.scss' as c;
+@use '../../styles/button' as button;
+
+.dataset-creator {
+  padding-right: 30px;
+  padding-left: 10px;
+  flex-direction: column;
+  overflow-y: auto;
+  @include c.scrollbar(white, #aaaaaa);
+
+  flex-grow: 1;
+  padding-bottom: 30px;
+}
+
+.section {
+  flex-direction: column;
+  padding-bottom: 35px;
+}
+
+.instructional {
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 15px;
+}
+
+.dropdown {
+  @include dropdown.dropdown();
+}
+
+.button-wrapper {
+  margin-top: 35px;
+}
+
+.message {
+  flex-grow: 1;
+  justify-content: center;
+  align-items: center;
+}
+
+.create-dataset-button {
+  @include button.button();
+  width: 240px;
+  min-width: 240px;
+  margin-left: 50px;
+}
+
+.create-dataset-button-disabled {
+  @extend .create-dataset-button;
+  @include button.button-disabled();
+}
+
+.property-header {
+  margin-top: 40px;
+  justify-content: center;
+  width: 100%;
+}
+
+.invisible {
+  display: none;
+}
+
+.red {
+  color: red;
+}

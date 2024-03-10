@@ -1,0 +1,6 @@
+dependencies {
+  api project(':backend:core')
+  
+  implementation project(':backend:json')
+}
+

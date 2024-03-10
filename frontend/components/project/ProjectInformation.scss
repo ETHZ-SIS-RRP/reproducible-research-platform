@@ -1,0 +1,24 @@
+@use '../../styles/common.scss' as c;
+
+.info {
+  width: 100%;
+  flex-direction: column;
+  flex-grow: 1;
+  overflow-y: auto;
+  @include c.scrollbar(white, #aaaaaa);
+  padding-right: 30px;
+}
+
+.section {
+  flex-direction: column;
+  padding-bottom: 40px;
+}
+
+.header {
+  line-height: 45px;
+  font-size: 18px;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  text-decoration: underline;
+}

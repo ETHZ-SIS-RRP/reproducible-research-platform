@@ -1,0 +1,3 @@
+#!/bin/bash
+export $(cat /.env | xargs)
+envsubst < /config.json.template > ~/config.json

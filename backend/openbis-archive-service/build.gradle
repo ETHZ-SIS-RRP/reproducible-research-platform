@@ -1,0 +1,4 @@
+dependencies {
+  api project(':backend:core'),
+      project(':backend:openbis-transport')
+}

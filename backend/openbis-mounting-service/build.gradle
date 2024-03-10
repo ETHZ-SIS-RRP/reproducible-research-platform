@@ -1,0 +1,8 @@
+dependencies {
+  api project(':backend:core'),
+      'openBIS:openBIS-API-V3-batteries-included-20.10.5-r1669972959'
+
+  implementation 'org.yaml:snakeyaml:1.29',
+                 'org.apache.commons:commons-text:1.9'
+}
+

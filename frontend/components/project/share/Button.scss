@@ -1,0 +1,23 @@
+@use '../../../styles/button' as button;
+
+.main {
+  width: 100%;
+  margin-top: 30px;
+}
+
+.message {
+  color: red;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.button {
+  @include button.button();
+  width: 360px;
+  min-width: 360px;
+}
+
+.button-disabled {
+  @extend .button;
+  @include button.button-disabled();
+}

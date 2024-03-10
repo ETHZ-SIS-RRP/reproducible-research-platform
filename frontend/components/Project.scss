@@ -1,0 +1,220 @@
+@mixin desktop() {
+  .project-desktop {
+    flex-direction: column;
+    height: 100px;
+    min-height: 100px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb(200, 200, 200);
+    margin-right: 5px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 2px 1px 8px 2px rgb(200, 200, 200);
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .project {
+    @extend .project-desktop;
+  }
+
+  .selected-project {
+    @extend .project-desktop;
+    box-shadow: 2px 1px 8px 2px rgb(8, 64, 126);
+  }
+
+  .centered {
+    align-content: center;
+    justify-content: center;
+  }
+
+  .name {
+    @extend .centered;
+    text-decoration: underline;
+  }
+
+  .repository {
+    @extend .centered;
+    margin-top: 5px;
+    font-size: 13px;
+  }
+
+  .controls {
+    flex-direction: row;
+    justify-content: right;
+    margin-top: auto;
+    font-size: 14px;
+  }
+
+  .status-label {
+    margin-left: 10px;
+    margin-right: 5px;
+    line-height: 36px;
+  }
+
+  .status {
+    margin-right: auto;
+    line-height: 36px;
+  }
+
+  .yellow {
+    color: rgb(154, 154, 63);
+  }
+
+  .green {
+    color: green;
+  }
+
+  .red {
+    color: red;
+  }
+
+  .black {
+    color: black;
+  }
+
+  .icon-wrapper {
+    height: 36px;
+    width: 36px;
+    margin-left: 2px;
+    margin-right: 2px;
+
+    &:hover {
+      box-shadow: 0px 0px 8px 2px rgb(8, 64, 126);
+      border-radius: 5px;
+      border-width: 0px;
+      cursor: pointer;
+    }
+  }
+
+  .icon {
+    height: 36px;
+    width: 36px;
+    padding: 5px;
+  }
+
+  .disabled {
+    pointer-events: none;
+    fill: gray;
+  }
+
+  .invisible {
+    display: none;
+  }
+
+  a {
+    color: black;
+    text-decoration: none;
+    &:hover {
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  }
+}
+
+@mixin mobile() {
+  .project-mobile {
+    flex-direction: column;
+    min-height: 15vh;
+    max-height: 30vh;
+    border-bottom-style: solid;
+    border-width: 0.5vh;
+    border-color: rgb(200, 200, 200);
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-top: 10px;
+    padding: 5px;
+    width: calc(100% - 20px);
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .project {
+    @extend.project-mobile;
+  }
+
+  .selected-project {
+    @extend .project-mobile;
+  }
+
+  .centered-mobile {
+    align-content: center;
+    justify-content: center;
+  }
+
+  .name {
+    @extend .centered-mobile;
+    text-decoration: underline;
+    font-size: 3vh;
+  }
+
+  .repository {
+    @extend .centered-mobile;
+    margin-top: 5px;
+    font-size: 1.5vh;
+  }
+
+  .controls {
+    flex-direction: row;
+    justify-content: right;
+    margin-top: auto;
+    font-size: 2vh;
+  }
+
+  .status-label {
+    line-height: 2vh;
+  }
+
+  .status {
+    margin-right: auto;
+    line-height: 2vh;
+  }
+
+  .yellow {
+    color: rgb(154, 154, 63);
+  }
+
+  .green {
+    color: green;
+  }
+
+  .red {
+    color: red;
+  }
+
+  .black {
+    color: black;
+  }
+
+  .icon-wrapper {
+    height: 4vh;
+    width: 4vh;
+    margin-left: 1vh;
+  }
+
+  .icon {
+    height: 100%;
+    width: 100%;
+  }
+
+  .disabled {
+    pointer-events: none;
+    fill: gray;
+  }
+
+  .invisible {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 799px) {
+  @include mobile();
+}
+
+@media only screen and (min-width: 800px) {
+  @include desktop();
+}

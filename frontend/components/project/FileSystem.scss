@@ -1,0 +1,14 @@
+.file-system {
+  flex-direction: column;
+  flex-grow: 1;
+  overflow-y: auto;
+  padding-bottom: 30px;
+}
+
+.empty-file-system {
+  width: 100%;
+  margin: auto;
+  justify-content: center;
+  text-align: center;
+  color: gray;
+}

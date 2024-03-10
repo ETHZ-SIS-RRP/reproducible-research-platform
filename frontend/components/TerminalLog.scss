@@ -1,0 +1,42 @@
+.terminal {
+  padding: 20px;
+  flex-direction: column;
+  z-index: 2;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  scroll-snap-type: y proximity;
+  background: repeating-linear-gradient(0deg, rgba(black, 0.15), rgba(black, 0.15) 1px, transparent 1px, transparent 2px),
+    radial-gradient(rgba(33, 92, 175, 0.75), black 120%);
+  width: 100%;
+
+  &::-webkit-scrollbar {
+    background-color: rgba(0,0,0, 0);
+    width: 14px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgb(100,100,100);
+    border-radius: 8px;
+    border: solid 3px transparent;
+    background-clip: content-box;
+  }
+
+  div:last-child {
+    scroll-snap-align: end;
+    padding-bottom: 20px;
+  }
+}
+
+.line {
+  white-space: pre-wrap;
+  height: auto;
+  color: white;
+  font: 16px Inconsolata, monospace;
+  text-shadow: 0 0 5px #c8c8c8;
+}
+
+.empty-line {
+  @extend .line;
+  white-space: pre;
+  min-height: 20px;
+}

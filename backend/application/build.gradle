@@ -1,0 +1,56 @@
+apply plugin: 'application'
+
+application {
+  mainClass = "ch.ethz.id.sis.rrp.application.Main"
+}
+
+dependencies {
+  implementation 'io.fabric8:kubernetes-client:5.12.3', // actually required by image-builder, but needs to be in classpath before openBIS jar that contains older Jackson
+                  project(':backend:jgit-clone-service'),
+                  project(':backend:crypto-cookie-jar'),
+                  project(':backend:file-system-bundle-repository'),
+                  project(':backend:file-system-log-service'),
+                  project(':backend:file-system-metadata-repository'),
+                  project(':backend:file-system-share-repository'),
+                  project(':backend:http'),
+                  project(':backend:openbis-archive-service'),
+                  project(':backend:project-service'),
+                  project(':backend:kubernetes-process-service'),
+                  project(':backend:json'),
+                  project(':backend:share-service'),
+                  project(':backend:openbis-authentication-service'),
+                  project(':backend:openbis-mounting-service'),
+                  project(':backend:bundle-service')
+}
+
+ext.genOutputDir = file("$buildDir/generated-resources")
+
+task generatePropInfo {
+  ext.outputFile = file("$genOutputDir/build-info.properties")
+  outputs.file(outputFile)
+  doLast {
+      outputFile.text = "repo2docker.version=$repo2dockerVersion"
+  }
+}
+
+sourceSets {
+  main {
+    resources {
+      srcDirs "$genOutputDir"
+    }
+  }
+}
+
+processResources.dependsOn generatePropInfo
+
+processResources {
+  duplicatesStrategy = DuplicatesStrategy.INCLUDE
+}
+
+configurations {
+  platform
+}
+
+artifacts {
+  platform(file("${installDist.destinationDir}/..")) { builtBy installDist }
+}

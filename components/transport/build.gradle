@@ -1,0 +1,41 @@
+plugins {
+  id 'com.bmuschko.docker-remote-api' version '6.7.0'
+}
+import com.bmuschko.gradle.docker.tasks.image.*
+
+def dockerContextDir =  "${buildDir}/docker-context"
+
+configurations {
+  openbisTransport
+}
+
+dependencies {
+  openbisTransport project(path: ':backend:openbis-transport', configuration: 'openbisTransport')
+}
+
+task createDockerContext(type: Sync, dependsOn: configurations.openbisTransport) {
+  from ('.') {
+    include 'Dockerfile'
+    include 'regctl*'
+    include '*.sh'
+    include 'play.template'
+    include 'play.ps1.template'
+    include 'play.bat'
+    into '/'
+  }
+
+  from configurations.openbisTransport {
+    into '/'
+  }
+
+  into dockerContextDir
+}
+
+task buildImage(type:Exec, dependsOn: createDockerContext) {
+  inputs.dir file(dockerContextDir)
+  workingDir dockerContextDir
+  outputs.dir new File("${buildDir}/build-image")
+  buildx delegate, 'transport'
+}
+
+build.dependsOn buildImage

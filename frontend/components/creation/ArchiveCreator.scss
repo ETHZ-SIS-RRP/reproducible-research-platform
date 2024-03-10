@@ -1,0 +1,43 @@
+@use '../../styles/common.scss' as c;
+@use '../../styles/button' as button;
+
+.main {
+  flex-direction: column;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 30px;
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  @include c.scrollbar(white, #aaaaaa);
+}
+
+.heading {
+  font-size: 18px;
+  text-decoration: underline;
+  margin-bottom: 20px;
+  justify-content: center;
+}
+
+.error {
+  flex-grow: 1;
+  justify-content: center;
+  align-items: center;
+  color: red;
+}
+
+.create-wrapper {
+  margin-top: 40px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.create-button {
+  @include button.button();
+  margin-left: auto;
+}
+
+.create-button-disabled {
+  @extend .create-button;
+  @include button.button-disabled();
+}

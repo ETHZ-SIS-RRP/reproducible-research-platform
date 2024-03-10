@@ -1,0 +1,127 @@
+@mixin desktop() {
+  .header {
+    flex-direction: row;
+    height: 50px;
+    min-height: 50px;
+    font-size: 14px;
+    background-color: rgb(33, 92, 175);
+    color: white;
+    width: 100vw;
+  }
+
+  .header-button {
+    width: 55px;
+    height: 35px;
+
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: auto;
+    margin-bottom: auto;
+
+    padding: 5px 5px 5px 5px;
+
+    fill: white;
+
+    box-shadow: 2px 1px 8px 2px rgb(8, 64, 126);
+    border-radius: 5px;
+
+    &:hover {
+      cursor: pointer;
+      box-shadow: 2px 1px 8px 0px rgb(8, 64, 126) inset;
+    }
+  }
+
+  .menu-button {
+    display: none;
+  }
+
+  .info-button {
+    @extend .header-button;
+  }
+
+  .loginName {
+    margin-left: auto;
+    line-height: 100%;
+    text-align: center;
+    align-items: center;
+    font-size: 18px;
+    padding-right: 20px;
+    pointer-events: none;
+  }
+
+  .loginNameClickable {
+    pointer-events: all;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .logout-button {
+    @extend .header-button;
+  }
+}
+
+@mixin mobile() {
+  .header {
+    flex-direction: row;
+    height: 10vh;
+    min-height: 40px;
+    max-height: 80px;
+    background-color: rgb(33, 92, 175);
+    color: white;
+    width: 100vw;
+  }
+
+  .header-button-mobile {
+    width: 8vh;
+    height: 8vh;
+    max-height: 65px;
+    min-height: 25px;
+
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: auto;
+    margin-bottom: auto;
+
+    padding: 5px 5px 5px 5px;
+
+    fill: white;
+
+    box-shadow: 2px 1px 8px 2px rgb(8, 64, 126);
+    border-radius: 5px;
+
+    &:hover {
+      cursor: pointer;
+      box-shadow: 2px 1px 8px 0px rgb(8, 64, 126) inset;
+    }
+  }
+
+  .menu-button {
+    @extend .header-button-mobile;
+  }
+
+  .create-project-button {
+    display: none;
+  }
+
+  .info-button {
+    @extend .header-button-mobile;
+    margin-left: auto;
+  }
+
+  .loginName {
+    display: none;
+  }
+
+  .logout-button {
+    @extend .header-button-mobile;
+  }
+}
+
+@media only screen and (max-width: 799px) {
+  @include mobile();
+}
+
+@media only screen and (min-width: 800px) {
+  @include desktop();
+}

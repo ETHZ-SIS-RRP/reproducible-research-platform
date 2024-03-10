@@ -1,0 +1,52 @@
+{
+  "name": "rrp-frontend",
+  "version": "0.0.1",
+  "description": "Frontend for Reproducible Research Platform",
+  "main": "index.ts",
+  "scripts": {
+    "dev": "webpack serve --config webpack.dev.js",
+    "build": "webpack --progress --profile --env BUILD_DIR=${BUILD_DIR} --config webpack.prod.js"
+  },
+  "engines": {
+    "node": "^20.5.0"
+  },
+  "author": "Scientific IT Services, ETH Zurich",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "react": "17.0.1",
+    "@types/react": "17.0.19",
+    "react-dom": "17.0.1",
+    "@types/react-dom": "17.0.9",
+    "redux": "4.1.1",
+    "react-redux": "7.2.6",
+    "@types/react-redux": "7.1.20",
+    "react-router": "5.1.2",
+    "@types/react-router": "5.1.8",
+    "react-router-dom": "5.2.0",
+    "@types/react-router-dom": "5.1.8",
+    "immer": "9.0.7",
+    "classnames": "2.3.1",
+    "typescript-fsa": "3.0.0",
+    "@redux-devtools/extension": "3.1.0",
+    "jszip": "3.10.1",
+    "file-saver": "2.0.5",
+    "@types/file-saver": "2.0.5"
+  },
+  "devDependencies": {
+    "typescript": "4.4.2",
+    "sass": "1.45.0",
+    "html-webpack-plugin": "5.3.2",
+    "ts-loader": "9.2.5",
+    "style-loader": "3.2.1",
+    "css-loader": "6.2.0",
+    "sass-loader": "12.4.0",
+    "webpack": "5.88.2",
+    "webpack-cli": "4.8.0",
+    "webpack-dev-server": "4.1.0",
+    "@svgr/webpack": "5.5.0",
+    "react-refresh": "0.10.0",
+    "@pmmmwh/react-refresh-webpack-plugin": "0.5.0-rc.6",
+    "@webpack-cli/serve": "1.5.2",
+    "raw-loader": "4.0.2"
+  }
+}

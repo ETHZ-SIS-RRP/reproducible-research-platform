@@ -1,0 +1,5 @@
+declare module '*.svg'
+declare module '*.png'
+declare module '*.sh'
+declare module '*.bat'
+declare module '*.ps1'

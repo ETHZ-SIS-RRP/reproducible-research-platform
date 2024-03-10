@@ -1,0 +1,32 @@
+plugins {
+    id 'org.gradle.toolchains.foojay-resolver-convention' version '0.5.0'
+}
+
+include (':frontend')
+
+include (":backend:application")
+include (":backend:bundle-service")
+include (":backend:core")
+include (":backend:crypto-cookie-jar")
+include (":backend:file-system-bundle-repository")
+include (":backend:file-system-log-service")
+include (":backend:file-system-metadata-repository")
+include (":backend:file-system-share-repository")
+include (":backend:http")
+include (":backend:jgit-clone-service")
+include (":backend:json")
+include (":backend:kubernetes-process-service")
+include (":backend:openbis-archive-service")
+include (":backend:openbis-authentication-service")
+include (":backend:openbis-mounting-service")
+include (":backend:openbis-transport")
+include (":backend:project-service")
+include (":backend:share-service")
+
+include (":components:dockerd")
+include (":components:file-server")
+include (":components:fuse")
+include (":components:platform")
+include (":components:proxy")
+include (":components:repo2docker")
+include (":components:transport")

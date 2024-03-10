@@ -1,0 +1,8 @@
+{
+  "version": "development",
+  "openbis": "unknown",
+  "build": "latest",
+  "repo2docker": "unknown",
+  "pat": true,
+  "downloader": "dev-cluster.local:5000/sis/rrp/downloader:latest"
+}

@@ -1,0 +1,9 @@
+dependencies {
+  api project(':backend:core')
+
+  implementation project(':backend:json'),
+                 'org.eclipse.jgit:org.eclipse.jgit:5.12.0.202106070339-r',
+                 'com.typesafe.akka:akka-http_2.13:10.1.11',
+                 'com.typesafe.akka:akka-actor_2.13:2.6.17',
+                 'com.typesafe.akka:akka-stream_2.13:2.6.17'
+}

@@ -1,0 +1,7 @@
+dependencies {
+  api project(':backend:core')
+
+  implementation project(':backend:file-system-bundle-repository'),
+                 'io.fabric8:kubernetes-client:5.12.3',
+                 'com.typesafe.akka:akka-actor_2.13:2.6.17'
+}

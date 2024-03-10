@@ -1,0 +1,165 @@
+@use '../styles/common.scss' as c;
+
+@mixin desktop() {
+  .project-list {
+    flex-direction: column;
+    width: 450px;
+    min-width: 450px;
+    border-right: 2px;
+    border-right-color: rgb(200, 200, 200);
+    border-right-style: solid;
+    height: 100%;
+    max-height: 100%;
+  }
+
+  .listWrapper {
+    width: 100%;
+    flex-direction: column;
+    height: 100%;
+    max-height: 100%;
+    overflow-y: auto;
+    @include c.scrollbar(white, #aaaaaa);
+  }
+
+  .header {
+    margin-bottom: 10px;
+  }
+
+  .your-projects {
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    line-height: 55px;
+    margin-right: 20px;
+    margin-left: 20px;
+    width: 100%;
+    border-bottom-style: solid;
+    border-bottom-width: 2px;
+    border-bottom-color: rgb(200, 200, 200);
+  }
+
+  .relative {
+    position: relative;
+    height: 0;
+    width: 0;
+  }
+
+  .button {
+    position: absolute;
+    color: white;
+    background-color: rgb(33, 92, 175);
+    height: 28px;
+    margin-left: -60px;
+    margin-top: 15px;
+    fill: white;
+
+    &:hover {
+      cursor: pointer;
+      box-shadow: 2px 1px 15px 0px rgb(8, 64, 126);
+    }
+  }
+
+  .buttonOpen {
+    @extend .button;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+
+  .buttonClosed {
+    @extend .button;
+    border-radius: 5px;
+  }
+
+  .plus {
+    width: 28px;
+    height: 28px;
+    margin-left: -2px;
+  }
+
+  .arrow {
+    width: 20px;
+    height: 20px;
+    margin-left: -10px;
+    margin-top: 5px;
+    margin-right: -2px;
+  }
+
+  .dropdown {
+    position: absolute;
+    margin-top: 28px;
+    flex-direction: column;
+    border: 2px;
+    border-style: solid;
+    border-color: rgb(33, 92, 175);
+    background-color: rgb(33, 92, 175);
+
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    z-index: 10;
+  }
+
+  .dropdown-item-base {
+    align-items: center;
+    justify-content: center;
+    width: 250px;
+    height: 30px;
+  }
+
+  .dropdown-header {
+    @extend .dropdown-item-base;
+    background-color: rgb(33, 92, 175);
+    color: white;
+    &:hover {
+      cursor: initial;
+    }
+  }
+
+  .dropdown-item {
+    @extend .dropdown-item-base;
+    &:hover {
+      background-color: rgb(186, 210, 243);
+    }
+    background-color: white;
+    color: black;
+    border-top: solid;
+    border-top-color: rgb(33, 92, 175);
+    border-top-width: 1px;
+  }
+
+  .invisible {
+    display: none;
+  }
+}
+
+@mixin mobile() {
+  .project-list {
+    height: 100%;
+    flex-direction: column;
+    width: 100vw;
+  }
+
+  .listWrapper {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .header {
+    display: none;
+  }
+}
+
+.no-projects {
+  margin-top: auto;
+  margin-bottom: auto;
+  justify-content: center;
+  color: rgb(150, 150, 150);
+}
+
+@media only screen and (max-width: 799px) {
+  @include mobile();
+}
+
+@media only screen and (min-width: 800px) {
+  @include desktop();
+}

@@ -1,0 +1,5 @@
+dependencies {
+  api project(':backend:http')
+
+  implementation project(':backend:json')
+}

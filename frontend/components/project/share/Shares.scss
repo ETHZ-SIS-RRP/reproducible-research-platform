@@ -1,0 +1,15 @@
+@use '../../../styles/common.scss' as c;
+
+.main {
+  flex-direction: column;
+  padding-left: 10px;
+  padding-right: 10px;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+  @include c.scrollbar(white, #aaaaaa);
+
+  > div {
+    margin-bottom: 40px;
+  }
+}

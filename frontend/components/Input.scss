@@ -1,0 +1,46 @@
+.wrapper-horizontal {
+  margin-top: 25px;
+}
+
+.wrapper-vertical {
+  @extend .wrapper-horizontal;
+  flex-direction: column;
+  > div {
+    margin-bottom: 4px;
+  }
+}
+
+.label {
+  font-size: 15px;
+  line-height: 16px;
+  text-decoration: double;
+  white-space: nowrap;
+  align-items: center;
+  justify-content: start;
+}
+
+.input {
+  font-size: 16px;
+  line-height: 16px;
+  outline: 0;
+  border-width: 0 0 2px;
+  border-color: rgb(200, 200, 200);
+  border-bottom-style: solid;
+  width: 100%;
+  align-items: center;
+  color: black;
+  background-color: white;
+  ::placeholder {
+    color: rgb(170, 170, 170);
+    opacity: 1;
+  }
+}
+
+.warn {
+  color: rgb(200, 200, 56);
+  font-weight: bolder;
+}
+
+.updating {
+  color: rgb(200,200,200)
+}

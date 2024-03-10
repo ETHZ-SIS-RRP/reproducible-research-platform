@@ -1,0 +1,57 @@
+plugins {
+  id "com.github.node-gradle.node" version "3.3.0"
+}
+
+def npmInstallDir = new File("${buildDir}/npm-install")
+def npmBuildDir = new File("${buildDir}/npm-build")
+def distributionDir = new File("${buildDir}/distribution")
+
+node {
+  download = true
+  version = '20.5.0'
+  nodeModulesDir = file("${projectDir}")
+  workDir = file("${projectDir}/nodejs/nodejs")
+}
+
+task npmInstallDependencies(type: NpmTask) {
+  doFirst {
+    npmInstallDir.mkdirs()
+  }
+  inputs.files('package.json')
+  outputs.dir npmInstallDir
+  args = ['ci']
+}
+
+task npmBuild(type: NpmTask, dependsOn: npmInstallDependencies) {
+  doFirst {
+    npmBuildDir.mkdirs()
+  }
+  inputs.files('./index.ts',
+              './index.html',
+              './tsconfig.json',
+              './declaration.d.ts',
+              './package-lock.json',
+              './webpack.prod.js',
+              'package.json')
+  inputs.dir('./styles')
+  inputs.dir('./components')
+  inputs.dir('./actions')
+  inputs.dir('./store')
+  inputs.dir('./middleware')
+  inputs.dir('./fonts')
+  inputs.dir('./svg')
+
+  outputs.dir npmBuildDir
+  environment = ["BUILD_DIR" : "$npmBuildDir"]
+  args = ['run', 'build']
+}
+
+configurations {
+  frontend
+}
+
+artifacts {
+  frontend(file("${npmBuildDir}")) { builtBy npmBuild }
+}
+
+build.dependsOn npmBuild

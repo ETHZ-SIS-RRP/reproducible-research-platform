@@ -1,0 +1,28 @@
+@use '../../styles/button' as button;
+
+.clone-wrapper {
+  margin-top: 40px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.log {
+  flex-grow: 1;
+  justify-content: center;
+  align-items: center;
+}
+
+.errorLog {
+  @extend .log;
+  color: red;
+}
+
+.clone-button {
+  @include button.button();
+  margin-left: auto;
+}
+
+.clone-button-disabled {
+  @extend .clone-button;
+  @include button.button-disabled();
+}

@@ -1,0 +1,7 @@
+@use './common.scss' as c;
+
+@mixin scale($property, $maxHeight, $cutoff) {
+  $limit: $maxHeight * 1px;
+  $scaled: calc(#{$maxHeight} * max(100vw, #{c.$minWidth}) / #{$cutoff});
+  #{$property}: calc(min(#{$limit}, #{$scaled}));
+}

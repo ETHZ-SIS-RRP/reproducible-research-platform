@@ -1,0 +1,47 @@
+.table {
+  display: grid;
+  width: 100%;
+}
+
+.header {
+  font-size: 18px;
+  text-decoration: underline;
+  line-height: 26px;
+  white-space: pre;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.cell {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.cell-stripe {
+  background: rgb(211, 222, 239);
+}
+
+.active-cell {
+  background-color: rgb(198, 216, 241);
+}
+
+.default-border {
+  border-top-color: rgb(186, 210, 243);
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-left-color: rgb(186, 210, 243);
+  border-left-style: solid;
+  border-left-width: 1px;
+}
+
+.right-border {
+  border-right-color: rgb(186, 210, 243);
+  border-right-style: solid;
+  border-right-width: 1px;
+}
+
+.bottom-border {
+  border-bottom-color: rgb(186, 210, 243);
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+}

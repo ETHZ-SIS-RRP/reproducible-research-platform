@@ -1,0 +1,41 @@
+.main {
+  flex-direction: column;
+  a {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.inactive {
+  display: none;
+}
+
+.table-value {
+  font-size: 16px;
+  line-height: 25px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+
+  &:hover {
+    cursor: default;
+  }
+}
+
+.timestamp {
+  @extend .table-value;
+  white-space: pre;
+}
+
+.icon {
+  @extend .table-value;
+  height: 24px;
+  margin-left: auto;
+  margin-right: auto;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.empty {
+  height: 25px;
+}

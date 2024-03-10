@@ -1,0 +1,42 @@
+@mixin desktop {
+  .projects {
+    height: calc(100% - 75px);
+    flex-direction: row;
+  }
+
+  .right-desktop {
+    height: 100%;
+    flex-grow: 1;
+    max-width: calc(100vw - 450px);
+    overflow-x: hidden;
+  }
+
+  .right {
+    @extend .right-desktop;
+  }
+
+  .scrollable-right {
+    @extend .right-desktop;
+    overflow-y: auto;
+  }
+}
+
+@mixin mobile {
+  .projects {
+    height: 100%;
+    flex-direction: row;
+  }
+
+  .right,
+  .scrollable-right {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 799px) {
+  @include mobile();
+}
+
+@media only screen and (min-width: 800px) {
+  @include desktop();
+}

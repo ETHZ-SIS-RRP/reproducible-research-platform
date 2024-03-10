@@ -1,0 +1,46 @@
+#!/bin/bash
+
+if ! command -v docker &> /dev/null
+then
+    echo "docker was not found in \$PATH"
+    exit -1
+fi
+
+here=$(cd $(dirname "${BASH_SOURCE:-$0}") && pwd)
+
+if [ ! "$(docker ps -q -f name=rrp-player)" ]
+then
+  echo "Loading RRP player image"
+
+  docker load < ${here}/image.tar
+  docker tag ${FULL_IMAGE} ${IMAGE}:${TAG}
+  docker rmi ${FULL_IMAGE}
+
+  docker run \
+      -d \
+      --rm \
+      --publish 8888:8888 \
+      --mount type=bind,source="${here}"/repo,target=/home/jovyan/project \
+      --mount type=bind,source="${here}"/openbis,target=/home/jovyan/openbis \
+      --mount type=bind,source="${here}"/results,target=/home/jovyan/results \
+      --workdir /home/jovyan \
+      --name rrp-player \
+      ${IMAGE}:${TAG} \
+      ${COMMAND}
+
+  echo -n "Waiting for the container to start"
+  while [[ $(docker exec -it rrp-player cat /proc/net/tcp 2>/dev/null|grep 22B8) = "" ]]; do
+    echo -n "."
+    sleep 2
+  done
+  echo ""
+fi
+
+if [[ $(uname) == Darwin ]]
+  then
+    open_cmd=open
+  else
+    open_cmd=xdg-open
+fi
+
+$open_cmd http://localhost:8888/lab

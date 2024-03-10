@@ -1,0 +1,9 @@
+dependencies {
+  api project(':backend:core'),
+      project(':backend:json'),
+      'com.typesafe.akka:akka-http_2.13:10.1.11',
+      'com.typesafe.akka:akka-actor_2.13:2.6.17',
+      'com.typesafe.akka:akka-stream_2.13:2.6.17',
+      'com.lightbend.akka:akka-stream-alpakka-file_2.13:3.0.4',
+      'org.slf4j:slf4j-simple:1.7.30'
+}

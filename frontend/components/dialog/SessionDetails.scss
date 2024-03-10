@@ -1,0 +1,24 @@
+@use '../../styles/button' as button;
+
+.main {
+  flex-direction: column;
+}
+
+.dismiss-button {
+  @include button.button();
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10px;
+}
+
+.name {
+  height: 36px;
+  margin-right: auto;
+  align-items: center;
+}
+
+.value {
+  @extend .name;
+  margin-left: auto;
+}

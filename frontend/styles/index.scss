@@ -1,0 +1,43 @@
+@use './common.scss' as c;
+
+@font-face {
+  font-family: 'DINProRegular';
+  src: url('../fonts/regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'DINProMedium';
+  src: url('../fonts/medium.woff2') format('woff2');
+}
+
+html {
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  margin-left: 0px;
+  margin-right: 0px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  background-color: white;
+  height: 100%;
+
+  > div {
+    display: flex;
+    flex: 1;
+    min-height: 100%;
+    overflow-y: auto;
+  }
+
+  div * {
+    display: flex;
+    font-family: 'DINProRegular';
+  }
+}

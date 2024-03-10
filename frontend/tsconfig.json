@@ -1,0 +1,37 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "composite": false,
+    "declaration": false,
+    "esModuleInterop": true,
+    "incremental": true,
+    "jsx": "react",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "noEmitOnError": true,
+    "noImplicitAny": true,
+    "noUnusedLocals": false,
+    "preserveWatchOutput": true,
+    "resolveJsonModule": true,
+    "strict": true,
+    "strictNullChecks": false,
+    "target": "es5",
+    "types": [],
+    "allowJs": true,
+    "isolatedModules": true,
+    "typeRoots": ["node_modules/@types", "typings"],
+    "lib": ["es6", "dom", "es2017"]
+  },
+  "include": [
+    "actions/**/*",
+    "common/**/*",
+    "components/**/*",
+    "middleware/**/*",
+    "store/**/*",
+    "styles/**/*",
+    "typings/**/*",
+    "favicon.ico",
+    "index.html",
+    "index.ts"
+  ]
+}

@@ -1,0 +1,4 @@
+dependencies {
+  api project(':backend:core'),
+      'openBIS:openBIS-API-V3-batteries-included-20.10.5-r1669972959'
+}

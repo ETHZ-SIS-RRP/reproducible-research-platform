@@ -1,0 +1,22 @@
+@mixin button {
+  line-height: 35px;
+  font-size: 18px;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 15px 5px 15px;
+  background-color: rgb(33, 92, 175);
+
+  height: 35px;
+  color: white;
+  border-radius: 5px;
+
+  &:hover {
+    cursor: pointer;
+    box-shadow: 2px 1px 15px 0px rgb(8, 64, 126);
+  }
+}
+
+@mixin button-disabled {
+  pointer-events: none;
+  background-color: gray !important;
+}

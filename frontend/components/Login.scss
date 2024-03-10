@@ -1,0 +1,181 @@
+@use '../styles/functions' as func;
+@use '../styles/button' as button;
+@use './Input.scss' as input;
+
+@mixin desktop() {
+  .login-wrapper {
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 50px;
+    padding-right: 50px;
+    height: 100%;
+  }
+
+  .login {
+    margin-top: auto;
+    margin-bottom: auto;
+
+    border-color: rgb(200, 200, 200);
+    border-style: solid;
+    border-radius: 25px;
+    border-width: 2px;
+
+    padding: 50px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .rrp {
+    font-size: 25px;
+    margin-bottom: 10px;
+  }
+
+  .sign-in {
+    display: none;
+  }
+
+  .powered-by {
+    font-size: 12px;
+    justify-content: center;
+  }
+
+  .logos {
+    flex-direction: column;
+    margin-bottom: 60px;
+  }
+
+  .openbis-logo {
+    height: 40px;
+  }
+
+  form {
+    flex-direction: column;
+  }
+
+  .pat {
+    flex-direction: column;
+  }
+
+  .or-text {
+    padding-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .invisible {
+    display: none;
+  }
+
+  .error {
+    font-size: 16px;
+    height: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    color: red;
+  }
+
+  .sign-in-button-desktop {
+    @include button.button();
+  }
+
+  .sign-in-button {
+    @extend .sign-in-button-desktop;
+  }
+
+  .sign-in-button-disabled {
+    @extend .sign-in-button-desktop;
+    @include button.button-disabled();
+  }
+
+  .input::placeholder {
+    color: white;
+  }
+}
+
+@mixin mobile() {
+  .login-wrapper {
+    margin-left: auto;
+    margin-right: auto;
+    height: 100%;
+  }
+
+  .login {
+    flex-direction: column;
+    margin-top: auto;
+    margin-bottom: auto;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .rrp {
+    display: none;
+  }
+
+  .sign-in {
+    font-size: 9vw;
+    text-transform: uppercase;
+    margin-bottom: 8vw;
+  }
+
+  .powered-by {
+    display: none;
+  }
+
+  .logos {
+    display: none;
+  }
+
+  .openbis-logo {
+    display: none;
+  }
+
+  form {
+    flex-direction: column;
+    width: 80vw;
+  }
+
+  .error {
+    font-size: 4vw;
+    height: 4vw;
+    margin-top: 4vw;
+    margin-bottom: 2vw;
+    color: red;
+  }
+
+  .sign-in-button-mobile {
+    @include button.button();
+    width: 50vw;
+    height: 15vw;
+    line-height: 10vw;
+    font-size: 5vw;
+    text-transform: uppercase;
+    margin-top: 5vw;
+  }
+
+  .sign-in-button {
+    @extend .sign-in-button-mobile;
+  }
+
+  .sign-in-button-disabled {
+    @extend .sign-in-button-mobile;
+    @include button.button-disabled();
+  }
+
+  .label {
+    display: none;
+  }
+
+  .input {
+    font-size: 5vw;
+    margin-bottom: 3vw;
+  }
+}
+
+@media only screen and (max-width: 799px) {
+  @include mobile();
+}
+
+@media only screen and (min-width: 800px) {
+  @include desktop();
+}

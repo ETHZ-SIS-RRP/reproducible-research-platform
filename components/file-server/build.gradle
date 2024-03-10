@@ -1,0 +1,48 @@
+plugins {
+  id 'com.bmuschko.docker-remote-api' version '6.7.0'
+}
+
+import com.bmuschko.gradle.docker.tasks.image.*
+
+def dockerContextDir =  "${buildDir}/docker-context"
+
+configurations {
+  frontend
+}
+
+dependencies {
+  frontend project(path: ':frontend', configuration: 'frontend')
+}
+
+task createDockerContext(type: Sync, dependsOn: configurations.frontend) {
+
+  from('.') {
+    into '/'
+    exclude 'build'
+  }
+
+  from (configurations.frontend) {
+    into '/frontend'
+  }
+
+  into dockerContextDir
+}
+
+task storeBuildTimeConfiguration(dependsOn: createDockerContext) {
+  doLast {
+    new File(dockerContextDir, ".env").text = """rrp_build_version=$rrpVersion
+rrp_build_commit=$gitCommitHash
+rrp_build_repo2docker=$repo2dockerVersion
+"""
+  }
+}
+
+
+task buildImage(type:Exec, dependsOn: storeBuildTimeConfiguration) {
+  inputs.dir file(dockerContextDir)
+  workingDir dockerContextDir
+  outputs.dir new File("${buildDir}/build-image")
+  buildx delegate, 'file-server'
+}
+
+build.dependsOn buildImage

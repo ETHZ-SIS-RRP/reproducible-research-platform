@@ -1,0 +1,95 @@
+wrapper {
+  gradleVersion = '8.2.1'
+}
+
+buildscript {
+  repositories {
+    gradlePluginPortal()
+  }
+  dependencies {
+    classpath 'com.github.maiflai:gradle-scalatest:0.32'
+  }
+}
+
+configure(subprojects) {
+  apply plugin:'base'
+
+  repositories {
+    mavenCentral()
+    flatDir { dirs new File(rootProject.rootDir, 'backend').absolutePath + "/libs" }
+  }
+
+  def props = new Properties()
+  rootProject.file("versions.txt").withInputStream { props.load(it) }
+  ext.rrpVersion = props.getProperty("rrp-version")
+  ext.repo2dockerVersion = props.getProperty("repo2docker-version")
+
+  new ByteArrayOutputStream().withStream { os ->
+    exec {
+      commandLine 'git', 'rev-parse', 'HEAD'
+      standardOutput = os
+    }
+
+    ext.gitCommitHash = os.toString().trim().substring(0, 7)
+  }
+
+  if (!project.hasProperty("registry")) {
+    ext.registry = "no-registry-given"
+  }
+
+  ext.buildx = { task, name, args=[:] ->
+
+    def allArgs = ['buildx', 'build',
+                  '--platform', 'linux/amd64,linux/arm64',
+                  '--provenance', 'false',
+                  '--push',
+                  '--pull',
+                  '--progress', 'plain',
+                  '-t', registry + '/' + name + ':' + gitCommitHash,
+                  '-t', registry + '/' + name + ':latest'
+                  ]
+
+    args.each { key, val ->
+      allArgs.add('--build-arg')
+      allArgs.add(key+"="+val)
+    }
+    allArgs.add('.')
+
+    task.executable = 'docker'
+    task.args = allArgs
+  }
+}
+
+configure(subprojects.findAll { it.buildFile.path.contains('/backend/') }) {
+  apply plugin: 'java-library'
+  apply plugin: 'scala'
+  apply plugin: 'com.github.maiflai.scalatest'
+
+  def scalaOptions = [
+      "-feature",
+      "-encoding", "UTF-8",
+      "-language:existentials",
+      "-language:implicitConversions",
+      "-language:higherKinds",
+      "-language:postfixOps"
+  ]
+
+  compileScala {
+    scalaCompileOptions.additionalParameters = scalaOptions
+  }
+
+  compileTestScala {
+    scalaCompileOptions.additionalParameters = scalaOptions
+  }
+
+  dependencies {
+    testImplementation 'org.scalatest:scalatest_3:3.2.12'
+    testRuntimeOnly 'com.vladsch.flexmark:flexmark-all:0.64.0'
+  }
+
+  java {
+    toolchain {
+      languageVersion.set(JavaLanguageVersion.of(17))
+    }
+  }
+}

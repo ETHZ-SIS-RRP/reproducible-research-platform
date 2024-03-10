@@ -1,0 +1,19 @@
+$minWidth: 250px;
+$minHeight: 290px;
+
+@mixin scrollbar($background-color, $thumb-color) {
+  &::-webkit-scrollbar {
+    background-color: $background-color;
+    width: 14px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $thumb-color;
+    border-radius: 8px;
+    border: solid 3px transparent;
+    background-clip: content-box;
+  }
+
+  scrollbar-color: $thumb-color $background-color;
+  scrollbar-gutter: stable;
+}

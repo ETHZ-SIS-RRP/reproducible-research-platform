@@ -1,0 +1,47 @@
+.file-system-item {
+  font-size: 18px;
+  line-height: 25px;
+
+  svg {
+    width: 24px;
+    fill: white;
+  }
+
+  &:hover {
+    background: rgb(211, 222, 239);
+    cursor: default;
+    svg {
+      fill: rgb(211, 222, 239);
+    }
+  }
+
+  padding-right: 30px;
+}
+
+.directory-item {
+  @extend .file-system-item;
+}
+
+.file-item {
+  @extend .file-system-item;
+  &:hover {
+    svg {
+      fill: black;
+      cursor: pointer;
+    }
+  }
+}
+
+.name {
+  flex-grow: 1;
+}
+
+.modification-time {
+  width: 200px;
+  text-align: start;
+}
+
+.size {
+  width: 200px;
+  justify-content: end;
+}

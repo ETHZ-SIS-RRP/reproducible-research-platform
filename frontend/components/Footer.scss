@@ -1,0 +1,68 @@
+@mixin desktop() {
+  .footer {
+    flex-direction: row;
+    height: 25px;
+    width: 100vw;
+    font-size: 14px;
+    line-height: 25px;
+    background-color: rgb(33, 92, 175);
+
+    border-top: solid;
+    border-top-color: rgb(33, 92, 175);
+    border-top-width: 1px;
+
+    color: white;
+  }
+
+  .footer-sis {
+    margin-left: 20px;
+
+    color: white;
+    text-decoration: none;
+
+    &:hover {
+      cursor: pointer;
+      color: rgb(175, 175, 175);
+    }
+  }
+
+  .footer-rrp {
+    color: white;
+    text-decoration: none;
+    margin-left: auto;
+    &:hover {
+      cursor: pointer;
+      color: rgb(175, 175, 175);
+    }
+  }
+
+  .footer-eth {
+    margin-left: auto;
+    margin-right: 20px;
+    height: 100%;
+
+    svg {
+      width: 90px;
+      fill: white;
+
+      &:hover {
+        cursor: pointer;
+        fill: rgb(150, 150, 150);
+      }
+    }
+  }
+}
+
+@mixin mobile() {
+  .footer {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 799px) {
+  @include mobile();
+}
+
+@media only screen and (min-width: 800px) {
+  @include desktop();
+}

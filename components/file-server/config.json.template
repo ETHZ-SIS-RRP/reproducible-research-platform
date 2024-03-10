@@ -1,0 +1,8 @@
+{
+  "version": "${rrp_build_version}",
+  "build": "${rrp_build_commit}",
+  "repo2docker": "${rrp_build_repo2docker}",
+  "openbis": "${rrp_openbis_url}",
+  "pat": ${rrp_personal_access_tokens},
+  "downloader": "${rrp_downloader_image}"
+}
