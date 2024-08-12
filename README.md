@@ -6,7 +6,7 @@ The Reproducible Research Platform (RRP) is an integrated platform for reproduci
 ![RRP overview](RRP_Overview.svg)
 
 ## Documentation
-A user documentation is provided [here](RRP-User-Documentation.pdf). More detailed technical documentation will be provided at a later stage.
+A user documentation is provided [here](https://sispub.sispages.ethz.ch/rrp-documentation/). More detailed technical documentation will be provided at a later stage.
 
 ## Requirements and setup
 RRP is built on top of Kubernetes. A functional and properly configured Kubernetes cluster is therefore a prerequisite for installing RRP. At ETH Zurich, we use a custom Kubernetes cluster provided by the IT Services of ETH Zurich. As other Kubernetes deployments are likely to differ significantly in terms of customization, we currently do not provide detailed step-by-step installation instructions. Another important prerequisite is a running and fully configured openBIS server, as RRP relies on openBIS for authentication and storage of projects and results.
