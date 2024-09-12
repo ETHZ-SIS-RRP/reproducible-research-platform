@@ -32,7 +32,7 @@ const InfoBox: FunctionComponent<ConnectedProps<typeof connector>> = props => {
           <Row key={index}>
             <div className={styles.name}>{name}</div>
             {name == 'openBIS backend' ? (
-              <a className={styles.value} href={`https://${value}`} target='_blank'>
+              <a className={styles.value} href={new URL(value).origin} target='_blank'>
                 {value}
               </a>
             ) : (

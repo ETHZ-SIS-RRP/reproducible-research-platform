@@ -3,7 +3,7 @@
 if [ $# -eq 0 ]
 then
   echo "usage: ./build.sh <registry>"
-  echo "example: ./build.sh sissource.ethz.ch:5005/sis/rrp/reproducible-research-platform"
+  echo "example: ./build.sh registry.sissource.ethz.ch:5005/sis/rrp/reproducible-research-platform"
   echo "         ./build.sh dev-cluster.local:5000/sis/rrp"
   exit 255
 fi
