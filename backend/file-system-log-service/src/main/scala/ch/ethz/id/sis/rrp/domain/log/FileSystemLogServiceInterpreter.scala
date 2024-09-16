@@ -55,7 +55,7 @@ case class FileSystemLogServiceInterpreter(getDir: Project => File) extends LogS
                     case u if u.endsWith("-player-bundle.log") => LogType.CreateOfflineBundle
 
               val attr      = Files.readAttributes(file.toPath(), classOf[BasicFileAttributes]);
-              val timestamp = LocalDateTime.ofInstant(attr.creationTime().toInstant(), ZoneId.systemDefault())
+              val timestamp = LocalDateTime.ofInstant(attr.lastModifiedTime().toInstant(), ZoneId.systemDefault())
 
               val markerFile = new File(file.getAbsolutePath() + ".rrp")
               val status =
