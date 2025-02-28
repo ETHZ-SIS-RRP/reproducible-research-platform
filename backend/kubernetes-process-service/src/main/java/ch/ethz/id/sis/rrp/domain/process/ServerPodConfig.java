@@ -156,6 +156,7 @@ public record ServerPodConfig(
                                 .withRunAsUser(1000l)
                                 .withRunAsGroup(1000l)
                                 .withFsGroup(1000l)
+                                .withFsGroupChangePolicy("OnRootMismatch")
                                 .endSecurityContext()
                                 .endSpec()
                                 .build();
