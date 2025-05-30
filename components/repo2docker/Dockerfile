@@ -1,5 +1,4 @@
-FROM ubuntu:22.04
-ARG TARGETARCH
+FROM --platform=linux/amd64 ubuntu:22.04
 
 SHELL ["/bin/bash", "-i", "-c"]
 
@@ -22,9 +21,7 @@ WORKDIR /home/rrp
 
 COPY traitlets.config.json /home/rrp/traitlets.config.json
 
-RUN arch=$TARGETARCH; \
-    if [ "$arch" = arm64 ]; then arch=aarch64; else arch=x86_64; fi; \
-    curl https://repo.anaconda.com/miniconda/Miniconda3-py310_22.11.1-1-Linux-${arch}.sh -o ./miniconda.sh
+RUN curl https://repo.anaconda.com/miniconda/Miniconda3-py310_22.11.1-1-Linux-x86_64.sh -o ./miniconda.sh
 
 RUN chmod +x ~/miniconda.sh
 RUN bash ./miniconda.sh -b -p ./miniconda3

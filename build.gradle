@@ -1,5 +1,5 @@
 wrapper {
-  gradleVersion = '8.2.1'
+  gradleVersion = '8.8'
 }
 
 buildscript {
@@ -7,7 +7,8 @@ buildscript {
     gradlePluginPortal()
   }
   dependencies {
-    classpath 'com.github.maiflai:gradle-scalatest:0.32'
+    classpath 'com.github.maiflai:gradle-scalatest:0.32',
+              'com.bmuschko:gradle-docker-plugin:9.4.0'
   }
 }
 
@@ -34,31 +35,64 @@ configure(subprojects) {
   }
 
   if (!project.hasProperty("registry")) {
-    ext.registry = "no-registry-given"
+    ext.registry = ""
   }
 
-  ext.buildx = { task, name, args=[:] ->
-
-    def allArgs = ['buildx', 'build',
-                  '--platform', 'linux/amd64,linux/arm64',
-                  '--provenance', 'false',
-                  '--push',
-                  '--pull',
-                  '--progress', 'plain',
-                  '-t', registry + '/' + name + ':' + gitCommitHash,
-                  '-t', registry + '/' + name + ':latest'
-                  ]
-
-    args.each { key, val ->
-      allArgs.add('--build-arg')
-      allArgs.add(key+"="+val)
-    }
-    allArgs.add('.')
-
-    task.executable = 'docker'
-    task.args = allArgs
-  }
+  ext.reg = registry == "local" ? "" : registry + "/"
 }
+
+def getCpuArchitecture() {
+  return System.getProperty("os.arch") == "aarch64" ? "arm64" : "amd64"
+}
+
+println("Building for ${getCpuArchitecture()}")
+
+configure(subprojects.findAll { it.file("Dockerfile").exists() }) {
+  apply plugin: 'com.bmuschko.docker-remote-api'
+  ext.dockerContextDir =  "${buildDir}/docker-context"
+  def imageNameTagged = "${reg}${name}:${gitCommitHash}"
+  def imageNameLatest = "${reg}${name}:latest"
+
+  task createDockerContext {
+    inputs.dir '.'
+    outputs.dir dockerContextDir
+    doLast {
+      copy {
+        from '.'
+        into dockerContextDir
+        exclude 'build'
+      }
+    }
+  }
+
+  task buildImage(type: com.bmuschko.gradle.docker.tasks.image.DockerBuildImage, dependsOn: createDockerContext) {
+    inputDir = file(dockerContextDir)
+    images.add(imageNameTagged)
+    images.add(imageNameLatest)
+    cacheFrom.add(imageNameTagged)
+    cacheFrom.add(imageNameLatest)
+    buildArgs.put("TARGETARCH", getCpuArchitecture())
+  }
+
+  task pushImage(type: com.bmuschko.gradle.docker.tasks.image.DockerPushImage, dependsOn: buildImage) {
+    images.add(imageNameTagged)
+    images.add(imageNameLatest)
+  }
+
+  configurations {
+    image
+  }
+
+  artifacts {
+    image buildImage.imageIdFile
+  }
+
+  if (registry == "local")
+    build.dependsOn buildImage
+  else
+    build.dependsOn pushImage
+}
+
 
 configure(subprojects.findAll { it.buildFile.path.contains('/backend/') }) {
   apply plugin: 'java-library'

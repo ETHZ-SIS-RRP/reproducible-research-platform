@@ -1,26 +1,3 @@
-plugins {
-  id 'com.bmuschko.docker-remote-api' version '6.7.0'
+buildImage {
+    buildArgs['repo2docker_version'] = repo2dockerVersion
 }
-import com.bmuschko.gradle.docker.tasks.image.*
-
-def dockerContextDir =  "${buildDir}/docker-context"
-
-task createDockerContext(type: Sync) {
-
-  from('.') {
-    into '/'
-    exclude 'build'
-  }
-
-  into dockerContextDir
-}
-
-task buildImage(type:Exec, dependsOn: createDockerContext) {
-  inputs.dir file(dockerContextDir)
-  workingDir dockerContextDir
-  outputs.dir new File("${buildDir}/build-image")
-  buildx delegate, 'repo2docker', ['repo2docker_version': repo2dockerVersion]
-}
-
-build.dependsOn buildImage
-

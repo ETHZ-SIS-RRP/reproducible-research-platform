@@ -1,10 +1,3 @@
-plugins {
-  id 'com.bmuschko.docker-remote-api' version '6.7.0'
-}
-import com.bmuschko.gradle.docker.tasks.image.*
-
-def dockerContextDir =  "${buildDir}/docker-context"
-
 configurations {
   backend
 }
@@ -13,25 +6,14 @@ dependencies {
   backend project(path: ':backend:application', configuration: 'platform')
 }
 
-
-task createDockerContext(type: Sync, dependsOn: configurations.backend) {
-  from ('.') {
-    include 'Dockerfile'
-    into '/'
+createDockerContext {
+  doLast {
+    copy {
+      from configurations.backend {
+        into '/'
+      }
+      into dockerContextDir
+    }
   }
-  
-  from configurations.backend {
-    into '/'
-  }
-
-  into dockerContextDir
 }
-
-task buildImage(type:Exec, dependsOn: createDockerContext) {
-  inputs.dir file(dockerContextDir)
-  workingDir dockerContextDir
-  outputs.dir new File("${buildDir}/build-image")
-  buildx delegate, 'platform'
-}
-
-build.dependsOn buildImage
+createDockerContext.dependsOn configurations.backend
