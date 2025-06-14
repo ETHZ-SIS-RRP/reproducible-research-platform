@@ -44,9 +44,14 @@ public record ServerPodConfig(
                 String typeName = "analysis-server";
 
                 Volume openbisVolume = new VolumeBuilder().withName("openbis").withNewEmptyDir().endEmptyDir().build();
-                EnvVar openbisToken = new EnvVarBuilder().withName("OPENBIS_TOKEN").withValue(openbisSession).build();
 
+                EnvVar openbisToken = new EnvVarBuilder().withName("OPENBIS_TOKEN").withValue(openbisSession).build();
                 EnvVar openbisUrl = new EnvVarBuilder().withName("OPENBIS_URL").withValue(openbis.getHost()).build();
+
+                EnvVar mwiBaseUrl = new EnvVarBuilder().withName("MWI_BASE_URL").withValue("/servers/"+projectId+"/matlab").build();
+                EnvVar mwiPort = new EnvVarBuilder().withName("MWI_APP_PORT").withValue("8889").build();
+                EnvVar mwiAppHost = new EnvVarBuilder().withName("MWI_APP_HOST").withValue("0.0.0.0").build();
+                EnvVar mwiEnableTokenAuth = new EnvVarBuilder().withName("MWI_ENABLE_TOKEN_AUTH").withValue("False").build();
 
                 VolumeMount openbisMount = new VolumeMountBuilder()
                                 .withName(openbisVolume.getName())
@@ -80,7 +85,7 @@ public record ServerPodConfig(
                                 .withName("main")
                                 .withCommand("/bin/bash")
                                 .withArgs("-c", PodConfig.trapTee(command, "/log/" + logFile))
-                                .withEnv(openbisUrl, openbisToken)
+                                .withEnv(openbisUrl, openbisToken, mwiBaseUrl, mwiPort, mwiAppHost, mwiEnableTokenAuth)
                                 .withImage(imageName)
                                 .withVolumeMounts(openbisMount, repoMount, resultMount, linkMount, logMount)
                                 .withWorkingDir("/home/jovyan")

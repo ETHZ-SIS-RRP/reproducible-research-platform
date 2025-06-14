@@ -14,7 +14,7 @@ const key = CryptoJS.PBKDF2(secret, "salt!", {
 
 function trimLeft(string, charToRemove) {
   var res = string
-  while(res.charAt(0)==charToRemove) {
+  while (res.charAt(0) == charToRemove) {
     res = res.substring(1)
   }
   return res
@@ -61,29 +61,35 @@ function getDirectories(source) {
 
 function getTarget(req) {
   let server = "unknown"
+  let matlab = false
   try {
     const username = readUserName(req)
     const original = req.url
     const parts = trimLeft(original, '/').split('/')
     const serverName = parts[1]
     const uid = serverName.split('-')[0]
-    const projects = getDirectories(process.env.rrp_proxy_home_dir+"/"+username+"/projects")
+    const projects = getDirectories(process.env.rrp_proxy_home_dir + "/" + username + "/projects")
     if (projects.some(e => e === uid)) {
-      server = serverName+'-'+username
+      server = serverName + '-' + username
     }
+
+    if (parts.at(2) == "matlab") {
+      matlab = true
+    }
+
   } catch (error) {
     console.log(error)
   }
 
-  const target = "http://server-"+server+".analysis-server."+process.env.rrp_namespace+".svc.cluster.local:8888"
+  const target = "http://server-" + server + ".analysis-server." + process.env.rrp_namespace + ".svc.cluster.local:" + (matlab ? "8889" : "8888")
   return target
 }
 
-var server = http.createServer(function(req, res) {
+var server = http.createServer(function (req, res) {
   proxy.web(req, res, {
     target: getTarget(req)
   }, function (err) {
-    console.log(req.url+": 404")
+    console.log(req.url + ": 404")
     res.writeHead(404)
     return res.end()
   })
@@ -93,10 +99,10 @@ server.on('upgrade', function (req, socket, head) {
   proxy.ws(req, socket, head, {
     target: getTarget(req)
   }, function (err) {
-    console.log(req.url+" (websocket): 404")
+    console.log(req.url + " (websocket): 404")
     return socket.destroy()
   })
 })
 
-console.log("listening on port 8080, in namespace "+process.env.rrp_namespace)
+console.log("listening on port 8080, in namespace " + process.env.rrp_namespace)
 server.listen(8080)
