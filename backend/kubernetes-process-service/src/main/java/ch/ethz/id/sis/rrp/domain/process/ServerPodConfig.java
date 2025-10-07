@@ -10,6 +10,7 @@ import io.fabric8.kubernetes.api.model.Container;
 import io.fabric8.kubernetes.api.model.ContainerBuilder;
 import io.fabric8.kubernetes.api.model.EnvVar;
 import io.fabric8.kubernetes.api.model.EnvVarBuilder;
+import io.fabric8.kubernetes.api.model.IntOrString;
 import io.fabric8.kubernetes.api.model.Pod;
 import io.fabric8.kubernetes.api.model.PodBuilder;
 import io.fabric8.kubernetes.api.model.Quantity;
@@ -52,6 +53,7 @@ public record ServerPodConfig(
                 EnvVar mwiPort = new EnvVarBuilder().withName("MWI_APP_PORT").withValue("8889").build();
                 EnvVar mwiAppHost = new EnvVarBuilder().withName("MWI_APP_HOST").withValue("0.0.0.0").build();
                 EnvVar mwiEnableTokenAuth = new EnvVarBuilder().withName("MWI_ENABLE_TOKEN_AUTH").withValue("False").build();
+                EnvVar originalCmd = new EnvVarBuilder().withName("RRP_ORIG_CMD").withValue(command).build();
 
                 VolumeMount openbisMount = new VolumeMountBuilder()
                                 .withName(openbisVolume.getName())
@@ -84,8 +86,10 @@ public record ServerPodConfig(
                 Container mainContainer = new ContainerBuilder()
                                 .withName("main")
                                 .withCommand("/bin/bash")
-                                .withArgs("-c", PodConfig.trapTee(command, "/log/" + logFile))
-                                .withEnv(openbisUrl, openbisToken, mwiBaseUrl, mwiPort, mwiAppHost, mwiEnableTokenAuth)
+                                .withArgs("-c", PodConfig.trapTee("if [ -f /home/jovyan/build/.binder/start ]; then "
+                                        + "/bin/bash /home/jovyan/build/.binder/start /bin/bash -c \"$RRP_ORIG_CMD\" || /bin/bash -c \"$RRP_ORIG_CMD\"; "
+                                        + "else /bin/bash -c \"$RRP_ORIG_CMD\"; fi", "/log/" + logFile))
+                                .withEnv(openbisUrl, openbisToken, mwiBaseUrl, mwiPort, mwiAppHost, mwiEnableTokenAuth, originalCmd)
                                 .withImage(imageName)
                                 .withVolumeMounts(openbisMount, repoMount, resultMount, linkMount, logMount)
                                 .withWorkingDir("/home/jovyan")
@@ -95,6 +99,13 @@ public record ServerPodConfig(
                                                 new Quantity(Double.toString(cpuRequest))))
                                 .withLimits(Map.of("memory", new Quantity(Double.toString(memoryRequest), "Gi")))
                                 .endResources()
+                                .withNewReadinessProbe()
+                                .withNewTcpSocket()
+                                .withPort(new IntOrString(8888))
+                                .endTcpSocket()
+                                .withInitialDelaySeconds(5)
+                                .withPeriodSeconds(10)
+                                .endReadinessProbe()
                                 .build();
 
                 EnvVar openbisSftpHost = new EnvVarBuilder()
