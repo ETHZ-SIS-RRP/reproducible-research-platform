@@ -20,8 +20,8 @@ cp /etc/registry-credentials/.dockerconfigjson /home/rrp/.docker/config.json
 
 cp -rp /repo repo
 cd repo
-git config --unset user.name
-git config --unset user.email
+git config --unset user.name || true
+git config --unset user.email || true
 git config --global --add safe.directory /home/jovyan/project
 cd ..
 

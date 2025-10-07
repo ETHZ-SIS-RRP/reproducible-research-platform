@@ -36,12 +36,14 @@ public record DownloadPlayerDataSets(
     }
 
     public void execute() throws TransportException {
-        try {
-            var mapping = MappingReader.readMapping(mappingFile.toFile());
-            mapping.destinations.forEach(this::downloadDataSets);
-        } catch (MappingException e) {
-            throw new TransportException(String.format("Could not read mapping from %s: %s",
-                    mappingFile, e.getMessage()));
+        if (mappingFile.toFile().exists()) {
+            try {
+                var mapping = MappingReader.readMapping(mappingFile.toFile());
+                mapping.destinations.forEach(this::downloadDataSets);
+            } catch (MappingException e) {
+                throw new TransportException(String.format("Could not read mapping from %s: %s",
+                        mappingFile, e.getMessage()));
+            }
         }
     }
 

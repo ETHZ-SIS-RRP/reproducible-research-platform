@@ -44,7 +44,9 @@ class DownloadPlayerDataSetsBuilder extends Builder<DownloadPlayerDataSets> {
         Path mappingFile = Paths.get((String) ns.get("file"));
         Path destinationDir = Paths.get((String) ns.get("directory"));
 
-        checkThat(mappingFile, this::isInputFile);
+        if (mappingFile.toFile().exists()) {
+            checkThat(mappingFile, this::isInputFile);
+        }
         checkThat(destinationDir, this::isOutputDirectory);
 
         return new DownloadPlayerDataSets(dss, token, mappingFile, destinationDir);
