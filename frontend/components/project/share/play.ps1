@@ -45,13 +45,14 @@ if (-Not (docker ps -q -f name=rrp-player)) {
   -d `
   --rm `
   --publish 8888:8888 `
-  --mount type=bind,source=$PSScriptRoot\repo,target=/home/jovyan/project `
-  --mount type=bind,source=$PSScriptRoot\openbis,target=/home/jovyan/openbis `
-  --mount type=bind,source=$PSScriptRoot\results,target=/home/jovyan/results `
+  --mount "type=bind,source=$PSScriptRoot\repo,target=/home/jovyan/project" `
+  --mount "type=bind,source=$PSScriptRoot\openbis,target=/home/jovyan/openbis" `
+  --mount "type=bind,source=$PSScriptRoot\results,target=/home/jovyan/results" `
   --workdir /home/jovyan `
+  --entrypoint /bin/bash `
   --name rrp-player `
   $image `
-  bash -c "$command"
+  -c "$command"
 
   Write-Host -NoNewline "Waiting for the container to start"
   while(-Not (docker exec -it rrp-player bash -c 'cat /proc/net/tcp 2>/dev/null|grep 22B8')) {

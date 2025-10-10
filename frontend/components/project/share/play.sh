@@ -47,9 +47,10 @@ then
       --mount type=bind,source="${here}"/openbis,target=/home/jovyan/openbis \
       --mount type=bind,source="${here}"/results,target=/home/jovyan/results \
       --workdir /home/jovyan \
+      --entrypoint /bin/bash \
       --name rrp-player \
       $image \
-      $command
+      -c "$command"
 
   if [[ $? -ne 0 ]]
   then

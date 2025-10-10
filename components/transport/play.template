@@ -24,9 +24,10 @@ then
       --mount type=bind,source="${here}"/openbis,target=/home/jovyan/openbis \
       --mount type=bind,source="${here}"/results,target=/home/jovyan/results \
       --workdir /home/jovyan \
+      --entrypoint /bin/bash \
       --name rrp-player \
       ${IMAGE}:${TAG} \
-      ${COMMAND}
+      -c '${COMMAND}'
 
   echo -n "Waiting for the container to start"
   while [[ $(docker exec -it rrp-player cat /proc/net/tcp 2>/dev/null|grep 22B8) = "" ]]; do
