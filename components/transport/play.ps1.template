@@ -30,9 +30,10 @@ if (docker ps -q -f name=rrp-player) {
   --mount "type=bind,source=$PSScriptRoot\results,target=/home/jovyan/results" `
   --workdir /home/jovyan `
   --entrypoint /bin/bash `
+  -e RRP_ORIG_CMD='${COMMAND}' `
   --name rrp-player `
   ${IMAGE}:${TAG} `
-  -c '${COMMAND}'
+  -c 'if [ -f /home/jovyan/.binder/start ]; then /bin/bash /home/jovyan/.binder/start /bin/bash -c "$RRP_ORIG_CMD"; else /bin/bash -c "$RRP_ORIG_CMD"; fi'
 
   Write-Host -NoNewline "Waiting for the container to start"
   while(-Not (docker exec -it rrp-player bash -c 'cat /proc/net/tcp 2>/dev/null|grep 22B8')) {
