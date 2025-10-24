@@ -33,7 +33,7 @@ if (docker ps -q -f name=rrp-player) {
   -e RRP_ORIG_CMD='${COMMAND}' `
   --name rrp-player `
   ${IMAGE}:${TAG} `
-  -c 'if [ -f /home/jovyan/.binder/start ]; then /bin/bash /home/jovyan/.binder/start /bin/bash -c "$RRP_ORIG_CMD"; else /bin/bash -c "$RRP_ORIG_CMD"; fi'
+  -c 'if [ -f /home/jovyan/project/.binder/start ]; then eval set -- $RRP_ORIG_CMD; /bin/bash /home/jovyan/project/.binder/start "$@"; else $RRP_ORIG_CMD; fi'
 
   Write-Host -NoNewline "Waiting for the container to start"
   while(-Not (docker exec -it rrp-player bash -c 'cat /proc/net/tcp 2>/dev/null|grep 22B8')) {

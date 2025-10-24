@@ -28,7 +28,7 @@ then
       --env RRP_ORIG_CMD='${COMMAND}' \
       --name rrp-player \
       ${IMAGE}:${TAG} \
-      -c 'if [ -f /home/jovyan/.binder/start ]; then /bin/bash /home/jovyan/.binder/start /bin/bash -c "$RRP_ORIG_CMD"; else /bin/bash -c "$RRP_ORIG_CMD"; fi'
+      -c 'if [ -f /home/jovyan/project/.binder/start ]; then eval set -- $RRP_ORIG_CMD; /bin/bash /home/jovyan/project/.binder/start "$@"; else $RRP_ORIG_CMD; fi'
 
   echo -n "Waiting for the container to start"
   while [[ $(docker exec -it rrp-player cat /proc/net/tcp 2>/dev/null|grep 22B8) = "" ]]; do
