@@ -26,7 +26,8 @@ RUN curl https://repo.anaconda.com/miniconda/Miniconda3-py310_22.11.1-1-Linux-x8
 RUN chmod +x ~/miniconda.sh
 RUN bash ./miniconda.sh -b -p ./miniconda3
 RUN ./miniconda3/bin/conda init
-RUN source ./.bashrc && conda install -y ruamel.yaml=0.16.12 && python3 -m pip install jupyter-repo2docker==$repo2docker_version ruamel_yaml
+# repo2docker reads chardet.universaldetector, which chardet 6 and later no longer provide.
+RUN source ./.bashrc && conda install -y ruamel.yaml=0.16.12 && python3 -m pip install jupyter-repo2docker==$repo2docker_version ruamel_yaml 'chardet<6'
 
 RUN mkdir -p /home/rrp/.docker/
 
